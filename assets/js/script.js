@@ -27,7 +27,7 @@ const questions = [
             "Congregations.",
             "Schools."
         ],
-        correctAnswer : "Schools."
+        correctAnswer : "Schools.",
         anotherAnswer : "Fishies." // window.alert "That ain't it chief, but I'll let it slide..."
     },
     { // Question 4
@@ -115,3 +115,12 @@ const questions = [
 ];
 
 console.log(questions[3].answers[2]);
+
+// TODO: Do HTML first.
+// TODO: startQuiz function = clears the start button and stuff in the first page to set up the questionnaire.
+// TODO: startTimer and display the first question
+// TODO: event listener to determine if the button was the correct answer
+// TODO: incorrect answers subtract from the timer
+// TODO: correct answers clear out the answer buttons and go to the next button
+// TODO: go from one value to the next and increase the index of the variable by 1
+// TODO: Create a function in order to end the game, stop the timer, clear out the last buttons and last questions, and display a user input form that is saved into local storage

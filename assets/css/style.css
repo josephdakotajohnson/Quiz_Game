@@ -1,0 +1,46 @@
+:root {
+    --primary-font: 'Bitter', serif;
+    --flavor-font: 'Handjet', cursive;
+    --primary-color: rgb(0, 0, 0);
+    /* --secondary-color: rgb(153, 28, 28); */
+    --secondary-color: rgb(255, 96, 96);
+}
+
+body {
+    background-image: radial-gradient(rgba(25, 0, 255, 0), rgb(25, 19, 56)), url(../images/Bubbles_Edit.jpg);
+    background-size: cover;
+}
+
+h1 {
+    font-family: var(--primary-font);
+    color: var(--primary-color);
+    font-size: 48px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 160px 0px 0px 0px;
+    font-style: italic;
+}
+
+.quiz-taker {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 80px;
+}
+
+.btn {
+    /* border: none; */
+    background: radial-gradient(rgba(25, 0, 255, 0), rgb(25, 19, 56));
+    background-color: var(--secondary-color);
+    border-radius: 125px;
+    box-shadow: 10px 5px 5px rgb(88, 88, 88);
+    color: rgb(17, 17, 17);
+    display: inline-block;
+    font-size: 60px;
+    line-height: 60px;
+    margin: 16px 16px 16px 20px;
+    padding: 14px 38px;
+    text-align: center;
+    cursor: pointer;
+}
