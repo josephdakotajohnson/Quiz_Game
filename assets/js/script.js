@@ -7,7 +7,7 @@ const questions = [
             "Herbivorous.",
             "Both detritivorous and planktivorous."
         ],
-        correctAnswer : "Omnivorous."
+        correctAnswer : 1 // "Omnivorous."
     },
     { // Question 2
         question : "Are all deep-sea fish blind?",
@@ -17,7 +17,7 @@ const questions = [
             "Mostly.",
             "Sometimes."
         ],
-        correctAnswer : "Sometimes."
+        correctAnswer : 3 // "Sometimes."
     },
     { // Question 3
         question : "Fish swim in groups called...",
@@ -27,7 +27,7 @@ const questions = [
             "Congregations.",
             "Schools."
         ],
-        correctAnswer : "Schools.",
+        correctAnswer : 3, // "Schools.",
         anotherAnswer : "Fishies." // window.alert "That ain't it chief, but I'll let it slide..."
     },
     { // Question 4
@@ -38,7 +38,7 @@ const questions = [
             "Being consumed, touched, or punctured.",
             "Swimming away and leaving it behind."
         ],
-        correctAnswer : "Being consumed, touched, or punctured."
+        correctAnswer : 2 // "Being consumed, touched, or punctured."
     },
     { // Question 5
         question : "What is the largest known living fish?",
@@ -48,7 +48,7 @@ const questions = [
             "The leedsichthys.",
             "The whale shark."
         ],
-        correctAnswer : "The whale shark."
+        correctAnswer : 3 // "The whale shark."
     },
     { // Question 6
         question : "What is a small baby fish called?",
@@ -58,7 +58,7 @@ const questions = [
             "Photocorynus Spiniceps.",
             "Something or another."
         ],
-        correctAnswer : "A fray or hatchling."
+        correctAnswer : 0 // "A fray or hatchling."
     },
     { // Question 7
         question : "Which of these is not a real type of fish?",
@@ -68,7 +68,7 @@ const questions = [
             "The dragonfish.",
             "The viperfish."
         ],
-        correctAnswer : "The direfish."
+        correctAnswer : 0 // "The direfish."
     },
     { // Question 8
         question : "How can you make fish scales edible.",
@@ -78,7 +78,7 @@ const questions = [
             "By roasting them at 375° Fahrenheit.",
             "By boiling them and completely removing them from the skin."
         ],
-        correctAnswer : "By fully cooking and totally cleaning them."
+        correctAnswer : 1 // "By fully cooking and totally cleaning them."
     },
     { // Question 9
         question : "Which one is healthier:  fried fish or fried chicken?",
@@ -88,7 +88,7 @@ const questions = [
             "Fried fish is, but only slightly.",
             "Fried chicken is, but only slightly."
         ],
-        correctAnswer : "Fried fish is, but only slightly."
+        correctAnswer : 2 // "Fried fish is, but only slightly."
     },
     { // Question 10
         question : "What is the dorsal fin?",
@@ -98,7 +98,7 @@ const questions = [
             "The fin on the left side of a lionfish.",
             "Both fins on either side of a whale."
         ],
-        correctAnswer : "The triangular fin on the back of a shark."
+        correctAnswer : 0 // "The triangular fin on the back of a shark."
     },
     { // Secret Question 11
         question : "Do you own a fish?",
@@ -108,17 +108,22 @@ const questions = [
             "I don't like fish. (Bad answer, don't pick this).\n*cracks knuckles*",
             "I just don't see a reason why this would be a question."
         ],
-        correctAnswer : [
-            "Yes.",
-            "No."]
+        correctAnswer : [0, 1] // ["Yes.", "No."]
     },
 ];
-var questionIndex = 
+const difference = 0;
+var btn = document.getElementById("startQuiz");
+var currentQuestion = document.getElementById("quizQuestion");
+var answeredCorrectly = 0;
+var answeredIncorrectly = 0;
+// var correctAnswer = document.getElementById(correctAnswer);
+// var answerChoices = document.getElementById(answers);
+var questionIndex = 0;
 
 console.log(questions[3].answers[2]);
 
 function startQuiz() {
-    console.log("hit");
+    // console.log("hit");
     document.getElementById("startQuiz").style.display = "none";
 
     var quizQuestion = document.getElementById("quizQuestion");
@@ -126,7 +131,16 @@ function startQuiz() {
 
     var optionContainer = document.getElementById("optionContainer");
 
-    defineAnswers(0);
+    defineAnswers(questionIndex);
+
+    var nextQuestion0 = document.getElementById("nextAnswer0");
+    nextQuestion0.addEventListener("click", followQuestion);
+    var nextQuestion1 = document.getElementById("nextAnswer1");
+    nextQuestion1.addEventListener("click", followQuestion);
+    var nextQuestion2 = document.getElementById("nextAnswer2");
+    nextQuestion2.addEventListener("click", followQuestion);
+    var nextQuestion3 = document.getElementById("nextAnswer3");
+    nextQuestion3.addEventListener("click", followQuestion);
 }
 
 function defineAnswers(question) {
@@ -134,12 +148,33 @@ function defineAnswers(question) {
         let answerChoice = document.createElement("button")
         // console.log(questions[question].answers[i])
         answerChoice.innerHTML = questions[question].answers[i];
-        answerChoice.classList.add('btn');
+        answerChoice.setAttribute('id', 'nextAnswer' + (difference + i));
+        answerChoice.classList.add('btn', difference + i);
         optionContainer.appendChild(answerChoice);
     }
 }
 
-var btn = document.getElementById("startQuiz");
+function followQuestion() {
+    if (difference === questions.correctAnswer) {
+        answeredCorrectly++;
+    } else {
+        answeredIncorrectly++;
+    };
+
+    console.log(answeredCorrectly);
+    console.log(answeredIncorrectly);
+    document.getElementById("nextAnswer0").style.display = "none";
+    document.getElementById("nextAnswer1").style.display = "none";
+    document.getElementById("nextAnswer2").style.display = "none";
+    document.getElementById("nextAnswer3").style.display = "none";
+
+    currentQuestion = document.getElementById("quizQuestion");
+    currentQuestion.textContent = "Are all deep-sea fish blind?";
+    questionIndex++;
+
+    defineAnswers(questionIndex);
+}
+
 
 btn.addEventListener("click", startQuiz);
 
