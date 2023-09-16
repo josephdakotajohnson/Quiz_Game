@@ -113,8 +113,37 @@ const questions = [
             "No."]
     },
 ];
+var questionIndex = 
 
 console.log(questions[3].answers[2]);
+
+function startQuiz() {
+    console.log("hit");
+    document.getElementById("startQuiz").style.display = "none";
+
+    var quizQuestion = document.getElementById("quizQuestion");
+    quizQuestion.textContent = "The majority of fish are what kind of eaters?";
+
+    var optionContainer = document.getElementById("optionContainer");
+
+    defineAnswers(0);
+}
+
+function defineAnswers(question) {
+    for(i=0; i < questions[question].answers.length; i++) {
+        let answerChoice = document.createElement("button")
+        // console.log(questions[question].answers[i])
+        answerChoice.innerHTML = questions[question].answers[i];
+        answerChoice.classList.add('btn');
+        optionContainer.appendChild(answerChoice);
+    }
+}
+
+var btn = document.getElementById("startQuiz");
+
+btn.addEventListener("click", startQuiz);
+
+//  document.getElementById("register").style.display = "block";
 
 // TODO: Do HTML first.
 // TODO: startQuiz function = clears the start button and stuff in the first page to set up the questionnaire.

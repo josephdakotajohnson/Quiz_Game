@@ -7,6 +7,11 @@
 }
 
 body {
+    height: 100%;
+}
+
+.background {
+    height: 100vh;
     background-image: radial-gradient(rgba(25, 0, 255, 0), rgb(25, 19, 56)), url(../images/Bubbles_Edit.jpg);
     background-size: cover;
 }
@@ -18,19 +23,20 @@ h1 {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    margin: 160px 0px 0px 0px;
+    padding: 160px 0px 0px 0px;
     font-style: italic;
 }
 
 .quiz-taker {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
     margin-top: 80px;
 }
 
 .btn {
     /* border: none; */
+    width: auto;
     background: radial-gradient(rgba(25, 0, 255, 0), rgb(25, 19, 56));
     background-color: var(--secondary-color);
     border-radius: 125px;
