@@ -16,6 +16,12 @@ body {
     background-size: cover;
 }
 
+.new {
+    height: 100vh;
+    background-image: radial-gradient(rgba(25, 0, 255, 0), rgb(25, 19, 56)), url(../images/Piranhas.jpg) !important;
+    background-size: cover;
+}
+
 h1 {
     font-family: var(--primary-font);
     color: var(--primary-color);

@@ -1,4 +1,4 @@
-const questions = [
+const questions = [ // 1, 3, 3, 2, 3, 0, 0, 1, 2, 0 <-- Correct Answers
     { // Question 1
         question : "The majority of fish are what kind of eaters?",
         answers : [
@@ -28,7 +28,7 @@ const questions = [
             "Schools."
         ],
         correctAnswer : 3, // "Schools.",
-        anotherAnswer : "Fishies." // window.alert "That ain't it chief, but I'll let it slide..."
+        // anotherAnswer : "Fishies." // window.alert "That ain't it chief, but I'll let it slide..."
     },
     { // Question 4
         question : "How do toxic pufferfish spread their natural toxin?",
@@ -108,10 +108,12 @@ const questions = [
             "I don't like fish. (Bad answer, don't pick this).\n*cracks knuckles*",
             "I just don't see a reason why this would be a question."
         ],
-        correctAnswer : [0, 1] // ["Yes.", "No."]
+        correctAnswer : 0 // ["Yes.", "No."]
     },
 ];
-const difference = 0;
+var difference = 0;
+var buttonChecker = 0;
+var correct = [1, 3, 3, 2, 3, 0, 0, 1, 2, 0];
 var btn = document.getElementById("startQuiz");
 var currentQuestion = document.getElementById("quizQuestion");
 var answeredCorrectly = 0;
@@ -133,14 +135,42 @@ function startQuiz() {
 
     defineAnswers(questionIndex);
 
+    // var nextQuestion0 = document.getElementById("nextAnswer0");
+    // nextQuestion0.addEventListener("click", followQuestion);
+    // var nextQuestion1 = document.getElementById("nextAnswer1");
+    // nextQuestion1.addEventListener("click", followQuestion);
+    // var nextQuestion2 = document.getElementById("nextAnswer2");
+    // nextQuestion2.addEventListener("click", followQuestion);
+    // var nextQuestion3 = document.getElementById("nextAnswer3");
+    // nextQuestion3.addEventListener("click", followQuestion);
     var nextQuestion0 = document.getElementById("nextAnswer0");
-    nextQuestion0.addEventListener("click", followQuestion);
+    nextQuestion0.addEventListener("click", buttonChecker0);
+    nextQuestion0.addEventListener("click", answerChecker);
     var nextQuestion1 = document.getElementById("nextAnswer1");
-    nextQuestion1.addEventListener("click", followQuestion);
+    nextQuestion1.addEventListener("click", buttonChecker1);
+    nextQuestion1.addEventListener("click", answerChecker);
     var nextQuestion2 = document.getElementById("nextAnswer2");
-    nextQuestion2.addEventListener("click", followQuestion);
+    nextQuestion2.addEventListener("click", buttonChecker2);
+    nextQuestion2.addEventListener("click", answerChecker);
     var nextQuestion3 = document.getElementById("nextAnswer3");
-    nextQuestion3.addEventListener("click", followQuestion);
+    nextQuestion3.addEventListener("click", buttonChecker3);
+    nextQuestion3.addEventListener("click", answerChecker);
+}
+
+function buttonChecker0() {
+    buttonChecker = 0;
+}
+
+function buttonChecker1() {
+    buttonChecker = 1;
+}
+
+function buttonChecker2() {
+    buttonChecker = 2;
+}
+
+function buttonChecker3() {
+    buttonChecker = 3;
 }
 
 function defineAnswers(question) {
@@ -154,27 +184,127 @@ function defineAnswers(question) {
     }
 }
 
-function followQuestion() {
-    if (difference === questions.correctAnswer) {
+function answerChecker() {
+    if (buttonChecker === questions[questionIndex].correctAnswer) {
         answeredCorrectly++;
-    } else {
+    } else if ((questionIndex === 2) && (buttonChecker === 1))  {
+        window.alert("That ain't it chief, but I'll let it slide...")
+        answeredCorrectly++;
+    }   else if ((questionIndex === 10) && (buttonChecker === 1))  {
+        answeredCorrectly++;
+    }   else if ((questionIndex === 10) && (buttonChecker === 2))  {
+        jumpScare();
+    }
+        else {
         answeredIncorrectly++;
     };
-
-    console.log(answeredCorrectly);
-    console.log(answeredIncorrectly);
-    document.getElementById("nextAnswer0").style.display = "none";
-    document.getElementById("nextAnswer1").style.display = "none";
-    document.getElementById("nextAnswer2").style.display = "none";
-    document.getElementById("nextAnswer3").style.display = "none";
-
-    currentQuestion = document.getElementById("quizQuestion");
-    currentQuestion.textContent = "Are all deep-sea fish blind?";
+    // console.log(correct[questionIndex]);
+    // console.log(questions[questionIndex].correctAnswer);
+    // console.log(answeredCorrectly);
+    // console.log(answeredIncorrectly);
+    console.log(questionIndex);
     questionIndex++;
+    // questionIndex--;
 
-    defineAnswers(questionIndex);
+    // followQuestion();
+    if (questionIndex === 11) {
+        return[results()];
+    } else if ((questionIndex <= 9) || (answeredCorrectly === 10)) {
+        followQuestion();
+    } else {
+        results();
+    } 
 }
 
+function followQuestion() {
+    // if (difference === questions.correctAnswer) {
+    //     answeredCorrectly++;
+    // } else {
+    //     answeredIncorrectly++;
+    // };
+
+    // console.log(answeredCorrectly);
+    // console.log(answeredIncorrectly);
+    // console.log(questionIndex);
+    // document.getElementById("nextAnswer0").style.display = "none";
+    // document.getElementById("nextAnswer1").style.display = "none";
+    // document.getElementById("nextAnswer2").style.display = "none";
+    // document.getElementById("nextAnswer3").style.display = "none";
+    document.getElementById("nextAnswer0").remove();
+    document.getElementById("nextAnswer1").remove();
+    document.getElementById("nextAnswer2").remove();
+    document.getElementById("nextAnswer3").remove();
+
+    currentQuestion = document.getElementById("quizQuestion");
+    // questionIndex++;
+    // console.log(questionIndex);
+    // currentQuestion.textContent = "Are all deep-sea fish blind?";
+    // questionIndex++;
+    if (questionIndex === 1) {
+        currentQuestion.textContent = "Are all deep-sea fish blind?";
+        defineAnswers(questionIndex);
+        // questionIndex++;
+    } else if (questionIndex === 2) {
+        currentQuestion.textContent = "Fish swim in groups called...";
+        defineAnswers(questionIndex);
+    } else if (questionIndex === 3) {
+        currentQuestion.textContent = "How do toxic pufferfish spread their natural toxin?";
+        defineAnswers(questionIndex);
+    } else if (questionIndex === 4) {
+        currentQuestion.textContent = "What is the largest known living fish?";
+        defineAnswers(questionIndex);
+    } else if (questionIndex === 5) {
+        currentQuestion.textContent = "What is a small baby fish called?";
+        defineAnswers(questionIndex);
+    } else if (questionIndex === 6) {
+        currentQuestion.textContent = "Which of these is not a real type of fish?";
+        defineAnswers(questionIndex);
+    } else if (questionIndex === 7) {
+        currentQuestion.textContent = "How can you make fish scales edible.";
+        defineAnswers(questionIndex);
+    } else if (questionIndex === 8) {
+        currentQuestion.textContent = "Which one is healthier:  fried fish or fried chicken?";
+        defineAnswers(questionIndex);
+    } else if (questionIndex === 9) {
+        currentQuestion.textContent = "What is the dorsal fin?";
+        defineAnswers(questionIndex);
+    } else if ((questionIndex === 10) && (answeredCorrectly === 10)) {
+        currentQuestion.textContent = "Do you own a fish?";
+        defineAnswers(questionIndex);
+    }
+
+    // defineAnswers(questionIndex);
+    var nextQuestion0 = document.getElementById("nextAnswer0");
+    nextQuestion0.addEventListener("click", buttonChecker0);
+    nextQuestion0.addEventListener("click", answerChecker);
+    var nextQuestion1 = document.getElementById("nextAnswer1");
+    nextQuestion1.addEventListener("click", buttonChecker1);
+    nextQuestion1.addEventListener("click", answerChecker);
+    var nextQuestion2 = document.getElementById("nextAnswer2");
+    nextQuestion2.addEventListener("click", buttonChecker2);
+    nextQuestion2.addEventListener("click", answerChecker);
+    var nextQuestion3 = document.getElementById("nextAnswer3");
+    nextQuestion3.addEventListener("click", buttonChecker3);
+    nextQuestion3.addEventListener("click", answerChecker);
+}
+
+function jumpScare() {
+    currentQuestion.textContent = "";
+    document.getElementById("nextAnswer0").remove();
+    document.getElementById("nextAnswer1").remove();
+    document.getElementById("nextAnswer2").remove();
+    document.getElementById("nextAnswer3").remove();
+    document.getElementById("sudden").classList.add("new")
+}
+
+function results() {
+    document.getElementById("nextAnswer0").remove();
+    document.getElementById("nextAnswer1").remove();
+    document.getElementById("nextAnswer2").remove();
+    document.getElementById("nextAnswer3").remove();
+    console.log(answeredCorrectly);
+    console.log(answeredIncorrectly);
+}
 
 btn.addEventListener("click", startQuiz);
 
