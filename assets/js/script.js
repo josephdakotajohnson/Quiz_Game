@@ -118,31 +118,45 @@ var btn = document.getElementById("startQuiz");
 var currentQuestion = document.getElementById("quizQuestion");
 var answeredCorrectly = 0;
 var answeredIncorrectly = 0;
-// var correctAnswer = document.getElementById(correctAnswer);
-// var answerChoices = document.getElementById(answers);
 var questionIndex = 0;
+var interval
+var time = 100
+var highScoreValues = JSON.parse(localStorage.getItem("playerScores")) || [];
+var txt1 = document.getElementById("highScores");
+var optionContainer = document.getElementById("optionContainer");
+var score
+
 
 console.log(questions[3].answers[2]);
 
 function startQuiz() {
-    // console.log("hit");
+    console.log("hit");
     document.getElementById("startQuiz").style.display = "none";
+    document.getElementById("highScores").style.display = "none";
+    document.getElementById("quizTimer").style.display = "flex";
+
+    var timer = document.getElementById("timer")
+
+    interval = setInterval(() => {
+        time--;
+        timer.textContent = time;
+
+        if ((time <= 50) && (time >= 11)) {
+            timer.classList.remove("quizTimerOkay")
+            timer.classList.add("quizTimerWarning")
+        } else if ((time <= 10) && (time >= 1)) {
+            timer.classList.remove("quizTimerWarning")
+            timer.classList.add("quizTimerDanger")
+        } else if (time <= 0) {
+            results();
+        }
+    }, 1000);
 
     var quizQuestion = document.getElementById("quizQuestion");
     quizQuestion.textContent = "The majority of fish are what kind of eaters?";
 
-    var optionContainer = document.getElementById("optionContainer");
-
     defineAnswers(questionIndex);
 
-    // var nextQuestion0 = document.getElementById("nextAnswer0");
-    // nextQuestion0.addEventListener("click", followQuestion);
-    // var nextQuestion1 = document.getElementById("nextAnswer1");
-    // nextQuestion1.addEventListener("click", followQuestion);
-    // var nextQuestion2 = document.getElementById("nextAnswer2");
-    // nextQuestion2.addEventListener("click", followQuestion);
-    // var nextQuestion3 = document.getElementById("nextAnswer3");
-    // nextQuestion3.addEventListener("click", followQuestion);
     var nextQuestion0 = document.getElementById("nextAnswer0");
     nextQuestion0.addEventListener("click", buttonChecker0);
     nextQuestion0.addEventListener("click", answerChecker);
@@ -190,23 +204,21 @@ function answerChecker() {
     } else if ((questionIndex === 2) && (buttonChecker === 1))  {
         window.alert("That ain't it chief, but I'll let it slide...")
         answeredCorrectly++;
-    }   else if ((questionIndex === 10) && (buttonChecker === 1))  {
+    } else if ((questionIndex === 10) && (buttonChecker === 1))  {
         answeredCorrectly++;
-    }   else if ((questionIndex === 10) && (buttonChecker === 2))  {
+    } else if ((questionIndex === 10) && (buttonChecker === 2))  {
         jumpScare();
-    }
-        else {
+    } else {
+        time = time - 10
         answeredIncorrectly++;
     };
     // console.log(correct[questionIndex]);
     // console.log(questions[questionIndex].correctAnswer);
     // console.log(answeredCorrectly);
     // console.log(answeredIncorrectly);
-    console.log(questionIndex);
+    // console.log(questionIndex);
     questionIndex++;
-    // questionIndex--;
 
-    // followQuestion();
     if (questionIndex === 11) {
         return[results()];
     } else if ((questionIndex <= 9) || (answeredCorrectly === 10)) {
@@ -217,33 +229,15 @@ function answerChecker() {
 }
 
 function followQuestion() {
-    // if (difference === questions.correctAnswer) {
-    //     answeredCorrectly++;
-    // } else {
-    //     answeredIncorrectly++;
-    // };
-
-    // console.log(answeredCorrectly);
-    // console.log(answeredIncorrectly);
-    // console.log(questionIndex);
-    // document.getElementById("nextAnswer0").style.display = "none";
-    // document.getElementById("nextAnswer1").style.display = "none";
-    // document.getElementById("nextAnswer2").style.display = "none";
-    // document.getElementById("nextAnswer3").style.display = "none";
     document.getElementById("nextAnswer0").remove();
     document.getElementById("nextAnswer1").remove();
     document.getElementById("nextAnswer2").remove();
     document.getElementById("nextAnswer3").remove();
 
     currentQuestion = document.getElementById("quizQuestion");
-    // questionIndex++;
-    // console.log(questionIndex);
-    // currentQuestion.textContent = "Are all deep-sea fish blind?";
-    // questionIndex++;
     if (questionIndex === 1) {
         currentQuestion.textContent = "Are all deep-sea fish blind?";
         defineAnswers(questionIndex);
-        // questionIndex++;
     } else if (questionIndex === 2) {
         currentQuestion.textContent = "Fish swim in groups called...";
         defineAnswers(questionIndex);
@@ -273,7 +267,6 @@ function followQuestion() {
         defineAnswers(questionIndex);
     }
 
-    // defineAnswers(questionIndex);
     var nextQuestion0 = document.getElementById("nextAnswer0");
     nextQuestion0.addEventListener("click", buttonChecker0);
     nextQuestion0.addEventListener("click", answerChecker);
@@ -304,17 +297,83 @@ function results() {
     document.getElementById("nextAnswer3").remove();
     console.log(answeredCorrectly);
     console.log(answeredIncorrectly);
+    endGame()
+}
+
+function endGame() {
+    console.log('Game Over!')
+    clearInterval(interval)
+    var amountOfQuestions = 10
+    if ((answeredCorrectly + answeredIncorrectly) === 11) {
+        amountOfQuestions = 11
+    }
+    score = answeredCorrectly + "/" + amountOfQuestions + " with " + time + " seconds left"
+    console.log(score)
+    
+    optionContainer.innerHTML += `<form id="submit-score">
+    <label for="initials">Initials:</label><br>
+    <input type="text" id="initials" name="initials"><br>
+    <input type="submit">
+    </form>`;
+    initials.classList.add('initialHere');
+    optionContainer.appendChild(initials);
+    var form = document.getElementById("submit-score")
+    form.addEventListener("submit", highScoreFunction)
+}
+
+function highScoreFunction(event) {
+    event.preventDefault();
+    console.log(event.target)
+    var playerInitials = document.getElementById("initials").value
+    if ((playerInitials.length > 3) || (playerInitials.length < 3)) {
+        window.alert("You cannot record more than 3 initials, and you must have at least 3 initials.")
+        return;
+    } else {
+        console.log("Local storage engaged.")
+        highScoreValues.push({
+            initials: playerInitials,
+            score: score
+        })
+        console.log(highScoreValues);
+        localStorage.setItem("playerScores", JSON.stringify(highScoreValues));
+        window.location.reload()
+    }
+}
+
+function highScoresCalc() {
+    console.log("hit");
+    document.getElementById("startQuiz").style.display = "none";
+    var txt2 = document.getElementById("highScores");
+    document.getElementById("highScores").classList.remove("txt1")
+    document.getElementById("highScores").classList.add("txt2")
+
+    txt2.innerHTML = "Return";
+
+    var title = document.getElementById("quizQuestion");
+    title.textContent = ("High Scores:");
+    if (highScoreValues.length === 0) {
+        let message = document.createElement("p")
+        message.innerHTML = "No highscores yet... Will you be the first?";
+        message.classList.add('playerScore');
+        optionContainer.appendChild(message);
+    } else {
+        var highscoreList = JSON.parse(JSON.stringify(highScoreValues))
+        console.log(highscoreList)
+        for(let i=0; i < highscoreList.length; i++) {
+            let highscoreItem = document.createElement("p")
+            highscoreItem.innerHTML = "Player: " + highscoreList[i].initials + " | " + "High Score: " + highscoreList[i].score;
+            highscoreItem.classList.add('playerScore');
+            optionContainer.appendChild(highscoreItem);
+        }
+
+    }
+
+    txt2.addEventListener("click", returnHome);
+}
+
+function returnHome() {
+    window.location.reload()
 }
 
 btn.addEventListener("click", startQuiz);
-
-//  document.getElementById("register").style.display = "block";
-
-// TODO: Do HTML first.
-// TODO: startQuiz function = clears the start button and stuff in the first page to set up the questionnaire.
-// TODO: startTimer and display the first question
-// TODO: event listener to determine if the button was the correct answer
-// TODO: incorrect answers subtract from the timer
-// TODO: correct answers clear out the answer buttons and go to the next button
-// TODO: go from one value to the next and increase the index of the variable by 1
-// TODO: Create a function in order to end the game, stop the timer, clear out the last buttons and last questions, and display a user input form that is saved into local storage
+txt1.addEventListener("click", highScoresCalc);

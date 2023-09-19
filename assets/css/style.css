@@ -29,7 +29,7 @@ h1 {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    padding: 160px 0px 0px 0px;
+    padding: 20px 0px 0px 0px;
     font-style: italic;
 }
 
@@ -55,4 +55,87 @@ h1 {
     padding: 14px 38px;
     text-align: center;
     cursor: pointer;
+}
+
+.txt1 {
+    /* border: none; */
+    width: auto;
+    background: radial-gradient(rgba(25, 0, 255, 0), rgb(25, 19, 56));
+    background-color: blue;
+    border-radius: 125px;
+    box-shadow: 5px 2.5px 2.5px rgb(88, 88, 88);
+    color: rgb(160, 160, 160);
+    display: inline-block;
+    font-size: 30px;
+    line-height: 30px;
+    margin: 8px 8px 8px 10px;
+    padding: 7px 19px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.txt2 {
+    /* border: none; */
+    width: auto;
+    background: radial-gradient(rgba(25, 0, 255, 0), rgb(25, 19, 56));
+    background-color: yellow;
+    border-radius: 125px;
+    box-shadow: 5px 2.5px 2.5px rgb(88, 88, 88);
+    color: rgb(46, 46, 46);
+    display: inline-block;
+    font-size: 30px;
+    line-height: 30px;
+    margin: 8px 8px 8px 10px;
+    padding: 7px 19px;
+    text-align: center;
+    cursor: pointer;
+}
+
+header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+}
+
+#quizTimer {
+    background-color: black;
+    border-radius: 125px;
+    width: 100px;
+    height: 50px;
+    top: 40%;
+    left: 46%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background: radial-gradient(rgba(25, 0, 255, 0), rgb(25, 19, 56));
+    background-color: navy;
+}
+
+.quizTimerText {
+    color: cyan;
+    font-weight: bolder;
+    padding: 2px;
+}
+
+.quizTimerOkay {
+    color: lime;
+    font-weight: bolder;
+}
+
+.quizTimerWarning {
+    color: yellow;
+    font-weight: bolder;
+}
+
+.quizTimerDanger {
+    color: red;
+    font-weight: bolder;
+}
+
+.playerScore {
+    font-size: x-large;
+    font-weight: bolder;
 }
